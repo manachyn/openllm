@@ -1,0 +1,27 @@
+namespace: bentoml
+openllm:
+  defines: runnable
+  containers:
+    server:
+      image: ghcr.io/bentoml/openllm
+      entrypoint: <- `openllm start ${model} --backend ${backend} --debug`
+      resources:
+        requests:
+          nvidia.com/gpu: 1
+  services:
+    web:
+      container: server
+      protocol: tcp
+      port: 3000
+      host-port: 3000
+  variables:
+    model:
+      type: string
+      value: tiiuae/falcon-7b
+    backend:
+      type: string
+      value: vllm
+stack:
+  defines: process-group
+  runnable-list:
+    - bentoml/openllm

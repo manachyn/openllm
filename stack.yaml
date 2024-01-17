@@ -1,0 +1,6 @@
+namespace: bentoml
+
+stack:
+  defines: process-group
+  runnable-list:
+    - bentoml/openllm
